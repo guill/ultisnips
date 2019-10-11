@@ -150,4 +150,12 @@ endfunction
 function! UltiSnips#RefreshSnippets() abort
     exec g:_uspy "UltiSnips_Manager._refresh_snippets()"
 endfunction
+
+function! UltiSnips#SetAutoReloadAllSources(reload) abort
+    exec g:_uspy "UltiSnips_Manager._auto_reload_all_sources = " . (a:reload ? "True" : "False")
+endfunction
+
+if has("nvim")
+    call UltiSnips#SetAutoReloadAllSources(v:false)
+endif
 " }}}

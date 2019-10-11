@@ -83,6 +83,8 @@ class SnippetManager(object):
 
         self._last_change = ('', 0)
 
+        self._auto_reload_all_sources = True
+
         self._added_snippets_source = AddedSnippetsSource()
         self.register_snippet_source('ultisnips_files', UltiSnipsFileSource())
         self.register_snippet_source('added', self._added_snippets_source)
@@ -570,8 +572,9 @@ class SnippetManager(object):
         matching_snippets = defaultdict(list)
         clear_priority = None
         cleared = {}
-        for _, source in self._snippet_sources:
-            source.ensure(filetypes)
+        if not autotrigger_only or self._auto_reload_all_sources:
+            for _, source in self._snippet_sources:
+                source.ensure(filetypes)
 
         # Collect cleared information from sources.
         for _, source in self._snippet_sources:
