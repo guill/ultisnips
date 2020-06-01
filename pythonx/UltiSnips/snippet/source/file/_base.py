@@ -52,6 +52,8 @@ class SnippetFileSource(SnippetSource):
         assert(ft not in self._snippets)
         for fn in self._get_all_snippet_files_for(ft):
             self._parse_snippets(ft, fn)
+        # If we can't find any snippets, store that off so we don't keep checking
+        self._snippets[ft]
         # Now load for the parents
         for parent_ft in self.get_deep_extends([ft]):
             if parent_ft != ft and self._needs_update(parent_ft):
